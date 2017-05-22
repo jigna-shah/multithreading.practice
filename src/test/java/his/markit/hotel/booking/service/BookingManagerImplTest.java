@@ -35,7 +35,7 @@ public class BookingManagerImplTest {
 		}
 		Assert.assertFalse(manager.isRoomAvailable(101, LocalDate.now()));
 		
-		//room is unavailable, throws exception
+		//the same room is unavailable, throws exception
 		try {
 			manager.addBooking("Jones", 101, LocalDate.now());
 			Assert.fail("BookingException expected as room is already booked by other guest");
@@ -46,12 +46,12 @@ public class BookingManagerImplTest {
 	
 	@Test
 	public void getAvailableRooms() throws BookingException {
-		BookingManagerImpl manager = new BookingManagerImpl(setupAndGetHotel());
 		List<Integer> expectedAvailableRooms = new LinkedList<Integer>();
 		expectedAvailableRooms.add(102);
 		expectedAvailableRooms.add(201);
 		expectedAvailableRooms.add(202);
 		
+		BookingManagerImpl manager = new BookingManagerImpl(setupAndGetHotel());
 		LocalDate today = LocalDate.now();
 		Assert.assertTrue(manager.isRoomAvailable(101, today));
 		manager.addBooking("Smith", 101, today);

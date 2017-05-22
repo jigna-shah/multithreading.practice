@@ -2,51 +2,27 @@ package his.markit.hotel.booking.model;
 
 import java.time.LocalDate;
 
-public final class Booking {
-	private String guest;
-	private Integer room;
+public final class BookingKey {
+
 	private LocalDate date;
-	
-	public Booking(String guest, Integer room, LocalDate date) {
-		this.guest = guest;
-		this.room = room;
+	private Integer room;
+	public BookingKey(LocalDate date, Integer room) {
 		this.date = date;
+		this.room = room;
 	}
-
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Booking [guest=").append(guest).append(", room=").append(room).append(", date=").append(date)
-				.append("]");
-		return builder.toString();
-	}
-
-	/**
-	 * @return the guest
-	 */
-	public String getGuest() {
-		return guest;
-	}
-
-	/**
-	 * @return the room
-	 */
-	public Integer getRoom() {
-		return room;
-	}
-
 	/**
 	 * @return the date
 	 */
 	public LocalDate getDate() {
 		return date;
 	}
-
-
+	/**
+	 * @return the room
+	 */
+	public Integer getRoom() {
+		return room;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -55,12 +31,9 @@ public final class Booking {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((guest == null) ? 0 : guest.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
 		return result;
 	}
-
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -75,19 +48,12 @@ public final class Booking {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Booking other = (Booking) obj;
+		BookingKey other = (BookingKey) obj;
 		if (date == null) {
 			if (other.date != null) {
 				return false;
 			}
 		} else if (!date.equals(other.date)) {
-			return false;
-		}
-		if (guest == null) {
-			if (other.guest != null) {
-				return false;
-			}
-		} else if (!guest.equals(other.guest)) {
 			return false;
 		}
 		if (room == null) {
@@ -99,5 +65,4 @@ public final class Booking {
 		}
 		return true;
 	}
-	
 }

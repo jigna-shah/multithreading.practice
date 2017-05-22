@@ -29,8 +29,8 @@ public class BookingManagerImpl implements BookingManager {
 	public void addBooking(String guest, Integer room, LocalDate date) throws BookingException {
 		BookingKey key = new BookingKey(date, room);
 		Booking	booking = new Booking(guest, key.getRoom(), key.getDate());
-		Booking booked  = bookingsByDate.putIfAbsent(key, booking);
-		if (booked != null) {
+		Booking alreadyBooked  = bookingsByDate.putIfAbsent(key, booking);
+		if (alreadyBooked != null) {
 			throw new BookingException("Sorry, room " + room + " is fully booked for this date " + date);
 		}
 	}

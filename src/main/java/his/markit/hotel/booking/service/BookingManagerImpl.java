@@ -2,13 +2,10 @@
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
 import his.markit.hotel.booking.exception.BookingException;
 import his.markit.hotel.booking.model.Booking;
 import his.markit.hotel.booking.model.BookingKey;
@@ -31,23 +28,21 @@ public class BookingManagerImpl implements BookingManager {
 	
 	public void addBooking(String guest, Integer room, LocalDate date) throws BookingException {
 		BookingKey key = new BookingKey(date, room);
-		boolean roomAvailable = isRoomAvailable(room, date);
-		if (roomAvailable) {
-			Booking	booking = new Booking(guest, key.getRoom(), key.getDate());
-			bookingsByDate.putIfAbsent(key, booking);
-		} else {
+		Booking	booking = new Booking(guest, key.getRoom(), key.getDate());
+		Booking booked  = bookingsByDate.putIfAbsent(key, booking);
+		if (booked != null) {
 			throw new BookingException("Sorry, room " + room + " is fully booked for this date " + date);
 		}
 	}
 
 	public Iterable<Integer> getAvailableRooms(LocalDate date) {
-		Set<BookingKey> bookingKeys = bookingsByDate.keySet();
-		List<BookingKey> bookedRoomsByDate =  bookingKeys.parallelStream().filter(key -> key.getDate().equals(date)).collect(Collectors.toList());
-		if (null != bookedRoomsByDate) {
-			List<Integer> bookedRooms = bookedRoomsByDate.stream().map(key -> key.getRoom()).collect(Collectors.toList());
-			return rooms.stream().filter(room -> !bookedRooms.contains(room)) .collect(Collectors.toSet());
-		}
-		return Collections.unmodifiableCollection(rooms);
-	}
+        List<Integer> available = new LinkedList<>();
+        rooms.stream().forEach(t-> {
+            if (isRoomAvailable(t, date)) {
+                available.add(t);
+            }
+        });
+        return available;
+    }
 
 }

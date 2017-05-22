@@ -2,6 +2,8 @@ package his.markit.hotel.booking.service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,16 +47,16 @@ public class BookingManagerImplTest {
 	@Test
 	public void getAvailableRooms() throws BookingException {
 		BookingManagerImpl manager = new BookingManagerImpl(setupAndGetHotel());
-		Set<Integer> expectedAvailableRooms = new HashSet<Integer>();
+		List<Integer> expectedAvailableRooms = new LinkedList<Integer>();
+		expectedAvailableRooms.add(102);
 		expectedAvailableRooms.add(201);
 		expectedAvailableRooms.add(202);
-		expectedAvailableRooms.add(102);
 		
 		LocalDate today = LocalDate.now();
 		Assert.assertTrue(manager.isRoomAvailable(101, today));
 		manager.addBooking("Smith", 101, today);
 		Iterable<Integer> availableRooms = manager.getAvailableRooms(today);
-		Assert.assertEquals(availableRooms, expectedAvailableRooms);;
+		Assert.assertEquals(expectedAvailableRooms,availableRooms);
 	}
 	
 	private Hotel setupAndGetHotel() {

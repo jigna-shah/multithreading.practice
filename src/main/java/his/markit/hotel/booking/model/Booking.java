@@ -1,4 +1,4 @@
-package his.markit.hotel.booking;
+package his.markit.hotel.booking.model;
 
 import java.time.LocalDate;
 
@@ -21,7 +21,6 @@ public final class Booking {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((guest == null) ? 0 : guest.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
 		return result;
 	}
@@ -46,13 +45,6 @@ public final class Booking {
 				return false;
 			}
 		} else if (!date.equals(other.date)) {
-			return false;
-		}
-		if (guest == null) {
-			if (other.guest != null) {
-				return false;
-			}
-		} else if (!guest.equals(other.guest)) {
 			return false;
 		}
 		if (room == null) {

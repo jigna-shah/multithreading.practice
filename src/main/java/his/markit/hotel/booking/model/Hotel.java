@@ -1,4 +1,5 @@
-package his.markit.hotel.booking;
+package his.markit.hotel.booking.model;
+
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,14 +10,14 @@ public final class Hotel {
 	private Set<Integer> rooms = new HashSet<Integer>();
 	
 	public Hotel(Set<Integer> rooms) {
-		this.rooms = rooms;
+		this.rooms.addAll(rooms);
 	}
 
 	/**
 	 * @return the rooms
 	 */
 	public Collection<Integer> getRooms() {
-		return Collections.unmodifiableCollection(rooms);
+		return Collections.unmodifiableCollection(this.rooms);
 	}
 	
 

@@ -1,6 +1,10 @@
 package his.markit.hotel.booking;
 
-public class HotelStaff implements Runnable {
+import java.util.concurrent.Callable;
+import his.markit.hotel.booking.model.Booking;
+import his.markit.hotel.booking.service.BookingManager;
+
+public class HotelStaff implements Callable<Boolean> {
 	
 	private BookingManager bookingManager;
 	private Booking booking;
@@ -8,13 +12,12 @@ public class HotelStaff implements Runnable {
 	public HotelStaff(BookingManager bm, Booking newBooking) {
 		this.bookingManager = bm;
 		this.booking = newBooking;
+		
 	}
 
-	public void run() {
-		bookingManager.getAvailableRooms(booking.getDate());
+	public Boolean call() throws Exception {
 		bookingManager.addBooking(booking.getGuest(), booking.getRoom(), booking.getDate());
-		bookingManager.getAvailableRooms(booking.getDate());
+		return true;
 	}
-	
-
 }
+
